@@ -13,7 +13,7 @@
             --bg-color: #f0faf5;
         }
 
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); margin: 0; padding-bottom: 90px; color: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); margin: 0; padding-bottom: 100px; color: #333; }
         header { text-align: center; padding: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo { font-size: 24px; font-weight: bold; color: var(--primary-green); display: flex; align-items: center; justify-content: center; gap: 8px; }
         
@@ -24,48 +24,38 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card { background: white; border-radius: 20px; padding: 25px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); box-sizing: border-box; margin-bottom: 20px; }
-        
         h2 { color: var(--primary-green); text-align: center; margin-top: 0; margin-bottom: 10px; }
-        .card-subtitle { text-align: center; font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.4; }
-
-        /* Estilos da Tabela de Cronograma */
-        .table-wrapper { overflow-x: auto; width: 100%; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 400px; }
-        th { background: var(--primary-green); color: white; padding: 12px 8px; text-align: left; }
-        td { padding: 10px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
-        .time-col { font-weight: bold; color: var(--accent-green); white-space: nowrap; }
-        .resp-col { font-size: 11px; color: #777; font-style: italic; }
-
-        /* Estrela de Avaliação */
-        .stars { font-size: 35px; color: #ddd; display: flex; justify-content: center; gap: 8px; margin: 20px 0; cursor: pointer; }
-        .star.active { color: #FFD700; font-variation-settings: 'FILL' 1; }
-
-        /* Botões de Link (Instagram e Download) */
-        .btn-link { 
-            display: flex; align-items: center; gap: 12px; background: #fff; padding: 15px; 
-            border-radius: 12px; text-decoration: none; color: #333; margin-bottom: 12px; 
-            border: 1px solid #ddd; font-weight: 600; transition: 0.2s; 
-        }
-        .btn-link:active { background: #f5f5f5; }
         
-        /* Botão de Download/Feedback Verde */
+        /* Tabela */
+        .table-wrapper { overflow-x: auto; width: 100%; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 300px; }
+        th { background: var(--primary-green); color: white; padding: 12px 8px; text-align: left; }
+        td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+
+        /* Botões */
+        .btn-link { 
+            display: flex; align-items: center; gap: 12px; background: #fff; padding: 12px; 
+            border-radius: 12px; text-decoration: none; color: #333; margin-bottom: 10px; 
+            border: 1px solid #eee; font-weight: 600; font-size: 14px; transition: 0.2s;
+        }
         .btn-action { 
             background: var(--accent-green); color: white; border: none; width: 100%; 
             padding: 15px; border-radius: 12px; font-weight: bold; font-size: 15px; 
             cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            gap: 10px; margin-top: 10px; transition: 0.3s; text-decoration: none;
+            gap: 10px; margin-top: 10px; text-decoration: none;
         }
-        .btn-action:hover { opacity: 0.9; }
 
-        /* Formulários */
-        textarea { width: 100%; border-radius: 12px; border: 1px solid #ddd; padding: 12px; font-family: inherit; box-sizing: border-box; margin-bottom: 15px; outline: none; }
-        textarea:focus { border-color: var(--accent-green); }
+        /* Admin */
+        .admin-input { width: 100%; padding: 10px; margin: 5px 0 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        label { font-size: 11px; font-weight: bold; color: var(--primary-green); text-transform: uppercase; }
+        .insta-toggle-row { display: flex; align-items: center; justify-content: justify; gap: 15px; background: #f9f9f9; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #eee; cursor: pointer;}
+        .insta-toggle-row span { font-size: 14px; font-weight: 500; }
+        .checkbox-custom { width: 22px; height: 22px; cursor: pointer; accent-color: var(--accent-green); }
 
         /* Menu Inferior */
         nav { background: white; display: flex; justify-content: space-around; border-top: 1px solid #eee; position: fixed; bottom: 0; width: 100%; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #666; font-size: 11px; padding: 12px 0; flex: 1; cursor: pointer; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #666; font-size: 10px; padding: 12px 0; flex: 1; cursor: pointer; }
         .nav-item.active { color: var(--accent-green); background-color: var(--light-green); border-top: 3px solid var(--accent-green); padding-top: 9px; }
-        .material-symbols-outlined { font-size: 24px; margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -77,85 +67,70 @@
     <main>
         <section id="home" class="content-section active">
             <div class="card" style="text-align: center;">
-                <h1 style="color: var(--primary-green); margin-top: 0;">Bem-Vindos!</h1>
-                <p><strong>FIB - Turma de Psicologia</strong></p>
-                <p style="font-size: 14px; color: #666;">Explore o menu inferior para acessar o cronograma, orientações de segurança e materiais extras.</p>
+                <h1 id="display-welcome-title">Bem-Vindos!</h1>
+                <p><strong id="display-turma-nome">Carregando...</strong></p>
+                <p id="display-welcome-msg" style="font-size: 14px; color: #666;">Use o menu para navegar.</p>
             </div>
         </section>
 
         <section id="seguranca" class="content-section">
             <div class="card">
                 <h2>Segurança</h2>
-                <img src="img1.jpg" alt="Guia de Segurança" style="width: 100%; border-radius: 10px;">
+                <img id="display-img-seguranca" src="img1.jpg" alt="Guia de Segurança" style="width: 100%; border-radius: 10px;">
             </div>
         </section>
 
         <section id="cronograma" class="content-section">
             <div class="card">
                 <h2>Programação</h2>
-                <div class="card-subtitle">27 de Abril de 2026 - Unidade Agudos</div>
                 <div class="table-wrapper">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Horário</th>
-                                <th>Atividade</th>
-                                <th>Responsável</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="time-col">07h50</td><td>Chegada das 30 pessoas</td><td class="resp-col">Prof. Marta (FIB)</td></tr>
-                            <tr><td class="time-col">08h00</td><td>Welcome Coffee</td><td class="resp-col">Simone Berto</td></tr>
-                            <tr><td class="time-col">08h10</td><td>Apresentação Unidade</td><td class="resp-col">Pedro / Reginaldo</td></tr>
-                            <tr><td class="time-col">08h20</td><td>MDF e Aplicações</td><td class="resp-col">Pedro / Reginaldo</td></tr>
-                            <tr><td class="time-col">09h00</td><td>Psicólogo Organizacional</td><td class="resp-col">Carlos Bertoline</td></tr>
-                            <tr><td class="time-col">09h30</td><td>Vídeo Segurança / EPI</td><td class="resp-col">Pedro / Reginaldo</td></tr>
-                            <tr><td class="time-col">09h45</td><td>Intervalo e Foto</td><td class="resp-col">Equipe</td></tr>
-                            <tr><td class="time-col">09h50</td><td>Visita Linha MDF 2</td><td class="resp-col">Equipe Fábrica</td></tr>
-                            <tr><td class="time-col">11h30</td><td>Almoço</td><td class="resp-col">Restaurante</td></tr>
-                            <tr><td class="time-col">12h30</td><td>Encerramento</td><td class="resp-col">Auditório</td></tr>
-                        </tbody>
+                        <thead><tr><th>Horário</th><th>Atividade</th><th>Resp.</th></tr></thead>
+                        <tbody id="agenda-body"></tbody>
                     </table>
                 </div>
-            </div>
-        </section>
-
-        <section id="feedback" class="content-section">
-            <div class="card">
-                <h2>Seu Feedback</h2>
-                <div class="stars" id="starRating">
-                    <span class="material-symbols-outlined star" data-value="1">star</span>
-                    <span class="material-symbols-outlined star" data-value="2">star</span>
-                    <span class="material-symbols-outlined star" data-value="3">star</span>
-                    <span class="material-symbols-outlined star" data-value="4">star</span>
-                    <span class="material-symbols-outlined star" data-value="5">star</span>
-                </div>
-                <textarea id="fb-msg" rows="4" placeholder="Conte-nos como foi sua experiência..."></textarea>
-                <button class="btn-action" onclick="enviarWhatsApp()">
-                    <span class="material-symbols-outlined">send</span> Enviar Feedback
-                </button>
             </div>
         </section>
 
         <section id="extra" class="content-section">
             <div class="card">
                 <h2>Conteúdo Extra</h2>
-                <p style="text-align: center; font-size: 14px; margin-bottom: 20px;">Siga nossos facilitadores:</p>
+                <p style="text-align: center; font-size: 13px; color: #666; margin-bottom: 15px;">Facilitadores presentes:</p>
+                <div id="container-instas"></div>
+                <a id="btn-download-extra" href="#" target="_blank" class="btn-action" style="margin-top: 20px;">
+                    <span class="material-symbols-outlined">download</span> Download das fotos
+                </a>
+            </div>
+        </section>
+
+        <section id="admin" class="content-section">
+            <div id="admin-login" class="card">
+                <h2>Acesso Admin</h2>
+                <input type="password" id="admin-pass" class="admin-input" placeholder="Senha">
+                <button class="btn-action" onclick="checkAdmin()">Entrar</button>
+            </div>
+
+            <div id="admin-panel" class="card" style="display: none;">
+                <h2>Configurações</h2>
+                <label>Nome da Turma</label>
+                <input type="text" id="edit-turma" class="admin-input">
                 
-                <a href="https://www.instagram.com/lucianolima.dexco?igsh=Mm9razI0ZXU0NWlu" target="_blank" class="btn-link">
-                    <span class="material-symbols-outlined" style="color: #E1306C;">person_add</span>
-                    <span>Instagram do Luciano</span>
-                </a>
+                <label>Agenda (HH:mm | Atividade | Resp)</label>
+                <textarea id="edit-agenda" class="admin-input" rows="3"></textarea>
+                
+                <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
+                <p style="font-weight: bold; font-size: 12px; margin-bottom: 10px;">FACILITADORES VISÍVEIS:</p>
+                
+                <div id="admin-insta-toggles">
+                    </div>
 
-                <a href="https://www.instagram.com/pedro.dexco?igsh=ZDI3Z2MyNGh2eGQy" target="_blank" class="btn-link">
-                    <span class="material-symbols-outlined" style="color: #E1306C;">person_add</span>
-                    <span>Instagram do Pedro</span>
-                </a>
-
-                <a href="https://we.tl/t-0p4mMGYk6pkwcV8E" target="_blank" class="btn-action" style="margin-top: 20px;">
-                    <span class="material-symbols-outlined">download</span> 
-                    Download das fotos
-                </a>
+                <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
+                <label>Link Download</label>
+                <input type="text" id="edit-link-down" class="admin-input">
+                <label>Cor do Botão Download</label>
+                <input type="color" id="edit-cor" class="admin-input" style="height: 40px;">
+                
+                <button class="btn-action" style="background: #222;" onclick="saveAdmin()">Salvar e Atualizar</button>
             </div>
         </section>
     </main>
@@ -164,11 +139,34 @@
         <div class="nav-item active" onclick="showSection('home', this)"><span class="material-symbols-outlined">home</span>Início</div>
         <div class="nav-item" onclick="showSection('seguranca', this)"><span class="material-symbols-outlined">shield</span>Segurança</div>
         <div class="nav-item" onclick="showSection('cronograma', this)"><span class="material-symbols-outlined">schedule</span>Agenda</div>
-        <div class="nav-item" onclick="showSection('feedback', this)"><span class="material-symbols-outlined">chat_bubble</span>Feedback</div>
         <div class="nav-item" onclick="showSection('extra', this)"><span class="material-symbols-outlined">more_horiz</span>Extra</div>
+        <div class="nav-item" onclick="showSection('admin', this)"><span class="material-symbols-outlined">settings</span>Admin</div>
     </nav>
 
     <script>
+        // DADOS DOS FACILITADORES (FIXOS)
+        const FACILITADORES = [
+            { nome: "Luciano Lima", link: "https://www.instagram.com/lucianolima.dexco?igsh=Mm9razI0ZXU0NWlu" },
+            { nome: "Pedro Dexco", link: "https://www.instagram.com/pedro.dexco?igsh=ZDI3Z2MyNGh2eGQy" },
+            { nome: "Indiara", link: "https://www.instagram.com/indiara.dexco?igsh=eXV5b3E3eG80eHJz" },
+            { nome: "Gabriel", link: "https://www.instagram.com/gabriel.dexco?igsh=OWZidmZ2NmdkYWFk" },
+            { nome: "Everton Padial", link: "https://www.instagram.com/everton.padial?igsh=MXZ6aWl3bHJmNW9wbg==" }
+        ];
+
+        let siteData = {
+            turma: "FIB - Turma de Psicologia",
+            agenda: "07:50 | Chegada | Prof. Marta\n08:00 | Welcome Coffee | Simone\n09:50 | Visita Linha MDF 2 | Equipe",
+            visibilidade: [true, true, true, true, true], // Estado das checkboxes
+            linkDownload: "https://we.tl/t-0p4mMGYk6pkwcV8E",
+            corBotao: "#00a859"
+        };
+
+        window.onload = () => {
+            const saved = localStorage.getItem('duratex_final_v1');
+            if(saved) siteData = JSON.parse(saved);
+            updateUI();
+        };
+
         function showSection(id, btn) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -177,22 +175,80 @@
             window.scrollTo(0,0);
         }
 
-        let currentRating = 0;
-        document.querySelectorAll('.star').forEach(star => {
-            star.onclick = () => {
-                currentRating = star.dataset.value;
-                document.querySelectorAll('.star').forEach(s => {
-                    s.classList.toggle('active', s.dataset.value <= currentRating);
-                });
-            }
-        });
+        function checkAdmin() {
+            if(document.getElementById('admin-pass').value === "1234") {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                
+                // Preencher campos
+                document.getElementById('edit-turma').value = siteData.turma;
+                document.getElementById('edit-agenda').value = siteData.agenda;
+                document.getElementById('edit-link-down').value = siteData.linkDownload;
+                document.getElementById('edit-cor').value = siteData.corBotao;
 
-        function enviarWhatsApp() {
-            const msg = document.getElementById('fb-msg').value;
-            const stars = "⭐".repeat(currentRating);
-            if(!msg) return alert("Por favor, digite uma mensagem.");
-            const texto = encodeURIComponent(`*Feedback Visita Duratex*\n*Avaliação:* ${stars}\n*Mensagem:* ${msg}`);
-            window.open(`https://api.whatsapp.com/send?phone=5511956189180&text=${texto}`, '_blank');
+                // Gerar Toggles
+                const container = document.getElementById('admin-insta-toggles');
+                container.innerHTML = "";
+                FACILITADORES.forEach((f, index) => {
+                    container.innerHTML += `
+                        <div class="insta-toggle-row" onclick="document.getElementById('check-f-${index}').click()">
+                            <input type="checkbox" class="checkbox-custom" id="check-f-${index}" ${siteData.visibilidade[index] ? 'checked' : ''} onclick="event.stopPropagation()">
+                            <span>${f.nome}</span>
+                        </div>
+                    `;
+                });
+            } else { alert("Senha incorreta!"); }
+        }
+
+        function saveAdmin() {
+            siteData.turma = document.getElementById('edit-turma').value;
+            siteData.agenda = document.getElementById('edit-agenda').value;
+            siteData.linkDownload = document.getElementById('edit-link-down').value;
+            siteData.corBotao = document.getElementById('edit-cor').value;
+
+            // Salvar quais estão ativos
+            siteData.visibilidade = FACILITADORES.map((_, index) => {
+                return document.getElementById(`check-f-${index}`).checked;
+            });
+
+            localStorage.setItem('duratex_final_v1', JSON.stringify(siteData));
+            updateUI();
+            alert("Dados salvos com sucesso!");
+        }
+
+        function updateUI() {
+            document.getElementById('display-turma-nome').innerText = siteData.turma;
+            
+            // Agenda
+            const tbody = document.getElementById('agenda-body');
+            tbody.innerHTML = "";
+            siteData.agenda.split('\n').forEach(linha => {
+                const p = linha.split('|');
+                if(p.length === 3) tbody.innerHTML += `<tr><td><b>${p[0].trim()}</b></td><td>${p[1].trim()}</td><td><i>${p[2].trim()}</i></td></tr>`;
+            });
+
+            // Instagrams (Baseado na visibilidade salva)
+            const container = document.getElementById('container-instas');
+            container.innerHTML = "";
+            let algumAtivo = false;
+
+            FACILITADORES.forEach((f, index) => {
+                if(siteData.visibilidade[index]) {
+                    algumAtivo = true;
+                    container.innerHTML += `
+                        <a href="${f.link}" target="_blank" class="btn-link">
+                            <span class="material-symbols-outlined" style="color: #E1306C;">person_add</span>
+                            <span>Instagram do ${f.nome}</span>
+                        </a>`;
+                }
+            });
+
+            if(!algumAtivo) container.innerHTML = "<p style='font-size:12px; color:#999; text-align:center;'>Nenhum facilitador selecionado para hoje.</p>";
+
+            // Botão Extra
+            const btn = document.getElementById('btn-download-extra');
+            btn.href = siteData.linkDownload;
+            btn.style.backgroundColor = siteData.corBotao;
         }
     </script>
 </body>
