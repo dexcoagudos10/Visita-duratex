@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         :root {
-            --primary-green: #004d30;
-            --light-green: #e6f7ef;
-            --accent-green: #00a859;
-            --bg-color: #f0faf5;
+            --primary-blue: #0033ab;
+            --light-blue: #eef2ff;
+            --accent-blue: #0046ff;
+            --bg-color: #f4f7ff;
         }
 
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); margin: 0; padding-bottom: 100px; color: #333; }
         header { text-align: center; padding: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo { font-size: 24px; font-weight: bold; color: var(--primary-green); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .logo img { height: 35px; width: auto; }
         
         main { padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .content-section { width: 100%; display: none; flex-direction: column; align-items: center; max-width: 600px; animation: fadeIn 0.3s; }
@@ -24,59 +24,88 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card { background: white; border-radius: 20px; padding: 25px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); box-sizing: border-box; margin-bottom: 20px; }
-        h2 { color: var(--primary-green); text-align: center; margin-top: 0; margin-bottom: 10px; }
+        h2 { color: var(--primary-blue); text-align: center; margin-top: 0; margin-bottom: 10px; }
         
-        /* Tabela */
+        /* IMAGEM PRINCIPAL SALVÁVEL */
+        .hero-img-container { width: 100%; height: 250px; border-radius: 15px; margin-bottom: 20px; overflow: hidden; background: #ddd; display: flex; align-items: center; justify-content: center; }
+        .hero-img-container img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .hero-img-container img.active { display: block; }
+        .placeholder-text { color: #999; font-size: 14px; }
+
+        /* JORNADA */
+        .etapa-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: white; padding: 12px; border-radius: 12px; border: 1px solid #eee; cursor: pointer; }
+        .etapa-number { background: var(--primary-blue); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
+        .etapa-label { flex-grow: 1; font-weight: 600; font-size: 14px; color: var(--primary-blue); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: flex-end; justify-content: center; }
+        .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 30px 30px 0 0; padding: 30px 20px; position: relative; max-height: 90vh; overflow-y: auto; animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-img { width: 100%; border-radius: 20px; margin-bottom: 20px; background: #eee; }
+
+        .quiz-option { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #eee; border-radius: 10px; background: white; cursor: pointer; text-align: left; }
+        .quiz-option.correct { background: #dcfce7; border-color: #22c55e; }
+        .quiz-option.wrong { background: #fee2e2; border-color: #ef4444; }
+
         .table-wrapper { overflow-x: auto; width: 100%; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 300px; }
-        th { background: var(--primary-green); color: white; padding: 12px 8px; text-align: left; }
-        td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { background: var(--primary-blue); color: white; padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
 
-        /* Botões */
-        .btn-link { 
-            display: flex; align-items: center; gap: 12px; background: #fff; padding: 12px; 
-            border-radius: 12px; text-decoration: none; color: #333; margin-bottom: 10px; 
-            border: 1px solid #eee; font-weight: 600; font-size: 14px; transition: 0.2s;
-        }
-        .btn-action { 
-            background: var(--accent-green); color: white; border: none; width: 100%; 
-            padding: 15px; border-radius: 12px; font-weight: bold; font-size: 15px; 
-            cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            gap: 10px; margin-top: 10px; text-decoration: none; transition: 0.3s;
-        }
+        .btn-link { display: flex; align-items: center; gap: 12px; background: #fff; padding: 12px; border-radius: 12px; text-decoration: none; color: #333; margin-bottom: 10px; border: 1px solid #eee; font-weight: 600; }
+        .btn-action { background: var(--accent-blue); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
+        .admin-input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        .toggle-row { display: flex; align-items: center; gap: 12px; background: #f9f9f9; padding: 12px; border-radius: 10px; margin-bottom: 8px; cursor: pointer; border: 1px solid #eee; }
+        .checkbox-custom { width: 20px; height: 20px; accent-color: var(--primary-blue); }
 
-        /* Admin */
-        .admin-input { width: 100%; padding: 10px; margin: 5px 0 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
-        label { font-size: 11px; font-weight: bold; color: var(--primary-green); text-transform: uppercase; }
-        .toggle-row { display: flex; align-items: center; gap: 15px; background: #f9f9f9; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #eee; cursor: pointer;}
-        .toggle-row span { font-size: 14px; font-weight: 500; }
-        .checkbox-custom { width: 22px; height: 22px; cursor: pointer; accent-color: var(--accent-green); }
-
-        /* Menu Inferior */
         nav { background: white; display: flex; justify-content: space-around; border-top: 1px solid #eee; position: fixed; bottom: 0; width: 100%; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #666; font-size: 10px; padding: 12px 0; flex: 1; cursor: pointer; }
-        .nav-item.active { color: var(--accent-green); background-color: var(--light-green); border-top: 3px solid var(--accent-green); padding-top: 9px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; padding: 10px 0; flex: 1; font-size: 9px; color: #666; cursor: pointer; }
+        .nav-item.active { color: var(--primary-blue); background: var(--light-blue); border-top: 3px solid var(--primary-blue); }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo"><span class="material-symbols-outlined">eco</span>Duratex</div>
-    </header>
+    <header><div class="logo"><img src="logo.png" alt="Duratex"></div></header>
 
     <main>
         <section id="home" class="content-section active">
+            <div class="hero-img-container" id="hero-container">
+                <span class="placeholder-text" id="hero-placeholder">Nenhuma foto carregada</span>
+                <img id="main-photo" src="" alt="Destaque">
+            </div>
             <div class="card" style="text-align: center;">
                 <h1 id="display-welcome-title">Bem-Vindos!</h1>
-                <p><strong id="display-turma-nome">Carregando...</strong></p>
-                <p style="font-size: 14px; color: #666;">Use o menu inferior para navegar.</p>
+                <p><strong id="display-turma-nome">Pedro Vicente</strong></p>
+                <p style="font-size: 14px; color: #666;">Explore a unidade através do menu abaixo.</p>
+            </div>
+        </section>
+
+        <section id="jornada" class="content-section">
+            <div class="card">
+                <h2>Jornada do MDF</h2>
+                <div id="lista-etapas"></div>
             </div>
         </section>
 
         <section id="seguranca" class="content-section">
             <div class="card">
                 <h2>Segurança</h2>
-                <img id="display-img-seguranca" src="img1.jpg" alt="Guia de Segurança" style="width: 100%; border-radius: 10px;">
+                <img src="img1.jpg" style="width:100%; border-radius:10px;" onerror="this.src='https://via.placeholder.com/500x300?text=img1.jpg+Nao+Encontrada'">
+                <div id="quiz-entry-point" style="margin-top:20px;">
+                    <button class="btn-action" onclick="startQuiz()">Iniciar Quiz de Segurança</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="content-section">
+            <div class="card">
+                <div id="quiz-screen">
+                    <h3 id="quiz-question"></h3>
+                    <div id="quiz-options"></div>
+                </div>
+                <div id="quiz-result" style="display:none; text-align:center;">
+                    <h2 id="quiz-score-text"></h2>
+                    <button class="btn-action" onclick="showSection('seguranca', document.getElementById('nav-seg'))">Voltar</button>
+                </div>
             </div>
         </section>
 
@@ -84,10 +113,7 @@
             <div class="card">
                 <h2>Programação</h2>
                 <div class="table-wrapper">
-                    <table>
-                        <thead><tr><th>Horário</th><th>Atividade</th><th>Resp.</th></tr></thead>
-                        <tbody id="agenda-body"></tbody>
-                    </table>
+                    <table><thead><tr><th>Horário</th><th>Atividade</th><th>Resp.</th></tr></thead><tbody id="agenda-body"></tbody></table>
                 </div>
             </div>
         </section>
@@ -95,12 +121,8 @@
         <section id="extra" class="content-section">
             <div class="card">
                 <h2>Conteúdo Extra</h2>
-                <p style="text-align: center; font-size: 13px; color: #666; margin-bottom: 15px;">Facilitadores presentes:</p>
                 <div id="container-instas"></div>
-                
-                <a id="btn-download-extra" href="#" target="_blank" class="btn-action" style="margin-top: 20px; display: none;">
-                    <span class="material-symbols-outlined">download</span> Download das fotos
-                </a>
+                <a id="btn-download-extra" class="btn-action" style="margin-top:15px;"><span class="material-symbols-outlined">download</span> Download Fotos</a>
             </div>
         </section>
 
@@ -110,42 +132,49 @@
                 <input type="password" id="admin-pass" class="admin-input" placeholder="Senha">
                 <button class="btn-action" onclick="checkAdmin()">Entrar</button>
             </div>
-
-            <div id="admin-panel" class="card" style="display: none;">
+            <div id="admin-panel" class="card" style="display:none;">
                 <h2>Configurações</h2>
                 
-                <label>Nome da Turma</label>
+                <label style="font-size:11px; font-weight:bold;">FOTO PRINCIPAL (INÍCIO)</label>
+                <input type="file" id="admin-photo-input" class="admin-input" accept="image/*">
+
+                <label style="font-size:11px; font-weight:bold;">NOME DA TURMA</label>
                 <input type="text" id="edit-turma" class="admin-input">
                 
-                <label>Agenda (HH:mm | Atividade | Resp)</label>
+                <label style="font-size:11px; font-weight:bold;">AGENDA</label>
                 <textarea id="edit-agenda" class="admin-input" rows="3"></textarea>
-                
-                <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-weight: bold; font-size: 11px; margin-bottom: 10px;">FACILITADORES VISÍVEIS:</p>
-                <div id="admin-insta-toggles"></div>
 
-                <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-weight: bold; font-size: 11px; margin-bottom: 10px;">BOTÃO DE DOWNLOAD:</p>
-                
-                <div class="toggle-row" onclick="document.getElementById('check-show-download').click()">
-                    <input type="checkbox" class="checkbox-custom" id="check-show-download" onclick="event.stopPropagation()">
-                    <span>Mostrar Botão Download</span>
+                <div class="toggle-row" onclick="document.getElementById('check-quiz').click()">
+                    <input type="checkbox" id="check-quiz" class="checkbox-custom" onclick="event.stopPropagation()"> 
+                    <span>Exibir Quiz</span>
                 </div>
 
-                <label>Link do Botão</label>
-                <input type="text" id="edit-link-down" class="admin-input">
+                <div class="toggle-row" onclick="document.getElementById('check-down').click()">
+                    <input type="checkbox" id="check-down" class="checkbox-custom" onclick="event.stopPropagation()"> 
+                    <span>Exibir Download</span>
+                </div>
+
+                <label style="font-size:11px; font-weight:bold;">LINK DOWNLOAD</label>
+                <input type="text" id="edit-link" class="admin-input">
                 
-                <label>Cor do Botão</label>
-                <input type="color" id="edit-cor" class="admin-input" style="height: 40px;">
+                <p style="font-weight:bold;">FACILITADORES:</p>
+                <div id="admin-insta-toggles"></div>
                 
-                <button class="btn-action" style="background: #222;" onclick="saveAdmin()">Salvar Alterações</button>
+                <button class="btn-action" style="background:#222; margin-top:20px;" onclick="saveAdmin()">Salvar Tudo</button>
             </div>
         </section>
     </main>
 
+    <div id="modal-etapa" class="modal" onclick="this.style.display='none'">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
     <nav>
         <div class="nav-item active" onclick="showSection('home', this)"><span class="material-symbols-outlined">home</span>Início</div>
-        <div class="nav-item" onclick="showSection('seguranca', this)"><span class="material-symbols-outlined">shield</span>Segurança</div>
+        <div class="nav-item" onclick="showSection('jornada', this)"><span class="material-symbols-outlined">account_tree</span>Jornada</div>
+        <div id="nav-seg" class="nav-item" onclick="showSection('seguranca', this)"><span class="material-symbols-outlined">shield</span>Segurança</div>
         <div class="nav-item" onclick="showSection('cronograma', this)"><span class="material-symbols-outlined">schedule</span>Agenda</div>
         <div class="nav-item" onclick="showSection('extra', this)"><span class="material-symbols-outlined">more_horiz</span>Extra</div>
         <div class="nav-item" onclick="showSection('admin', this)"><span class="material-symbols-outlined">settings</span>Admin</div>
@@ -153,108 +182,128 @@
 
     <script>
         const FACILITADORES = [
-            { nome: "Luciano Lima", link: "https://www.instagram.com/lucianolima.dexco?igsh=Mm9razI0ZXU0NWlu" },
-            { nome: "Pedro Dexco", link: "https://www.instagram.com/pedro.dexco?igsh=ZDI3Z2MyNGh2eGQy" },
-            { nome: "Indiara", link: "https://www.instagram.com/indiara.dexco?igsh=eXV5b3E3eG80eHJz" },
-            { nome: "Gabriel", link: "https://www.instagram.com/gabriel.dexco?igsh=OWZidmZ2NmdkYWFk" },
-            { nome: "Everton Padial", link: "https://www.instagram.com/everton.padial?igsh=MXZ6aWl3bHJmNW9wbg==" }
+            { nome: "Luciano Lima", link: "https://www.instagram.com/lucianolima.dexco" },
+            { nome: "Pedro Vicente", link: "https://www.instagram.com/pedro.dexco" },
+            { nome: "Indiara Peres", link: "https://www.instagram.com/indiara.dexco" },
+            { nome: "Gabriel Carvalho", link: "https://www.instagram.com/gabriel.dexco" },
+            { nome: "Everton Padial", link: "https://www.instagram.com/everton.padial" }
         ];
 
-        let siteData = {
-            turma: "FIB - Turma de Psicologia",
-            agenda: "07:50 | Chegada | Prof. Marta\n08:00 | Welcome Coffee | Simone\n09:50 | Visita Linha MDF 2 | Equipe",
-            visibilidade: [true, true, true, true, true],
-            showDownload: true,
-            linkDownload: "https://we.tl/t-0p4mMGYk6pkwcV8E",
-            corBotao: "#00a859"
-        };
+        const ETAPAS = [
+            { n: 1, t: "Florestas Plantadas", oq: "Tudo começa com o cultivo sustentável de eucalipto e pinus.", cur: "A Duratex possui uma das maiores áreas de reflorestamento do Brasil." },
+            { n: 2, t: "Toras", oq: "A madeira é cortada em toras padronizadas para o processamento.", cur: "As toras são selecionadas rigorosamente para garantir a fibra ideal." },
+            { n: 3, t: "Descascador", oq: "As toras passam por grandes tambores que removem a casca por atrito.", cur: "A casca removida é utilizada como biomassa para gerar energia limpa." },
+            { n: 4, t: "Produção de Cavacos", oq: "A madeira é picada em pequenos pedaços chamados cavacos.", cur: "O tamanho uniforme do cavaco garante um cozimento eficiente da fibra." },
+            { n: 5, t: "Classificação e Lavagem", oq: "Os cavacos são lavados e peneirados para eliminar impurezas.", cur: "Esse processo protege as máquinas e aumenta a durabilidade do painel." },
+            { n: 6, t: "Desfibrador", oq: "Sob alta pressão e calor, o cavaco vira uma fibra macia de madeira.", cur: "Nesta fase, a madeira adquire a textura de algodão." },
+            { n: 7, t: "Formação do Painel", oq: "As fibras recebem resina e são espalhadas em um colchão contínuo.", cur: "A distribuição uniforme evita falhas no interior da chapa." },
+            { n: 8, t: "Pré-Prensagem", oq: "O colchão de fibras é compactado para retirar o ar excessivo.", cur: "É aqui que o painel começa a ganhar sua espessura definida." },
+            { n: 9, t: "Prensagem Contínua", oq: "Calor e pressão extrema fundem as fibras e a resina permanentemente.", cur: "A prensa funciona sem parar, criando um tapete infinito de MDF." },
+            { n: 10, t: "Corte Chapa Máster", oq: "Serras precisas cortam o tapete infinito em grandes painéis máster.", cur: "O corte é feito de forma automatizada para manter o ritmo da linha." },
+            { n: 11, t: "Resfriamento", oq: "As chapas quentes descansam em estrelas rotativas para esfriar.", cur: "O resfriamento controlado evita que a madeira empenue ou rache." },
+            { n: 12, t: "Lixadeira", oq: "As chapas são lixadas para atingir a espessura final e superfície lisa.", cur: "O pó de lixa é coletado e também usado como combustível renovável." },
+            { n: 13, t: "Corte Final", oq: "Os painéis máster são divididos nos formatos comerciais finais.", cur: "A precisão milimétrica garante o esquadro perfeito para móveis." },
+            { n: 14, t: "Painel de MDF", oq: "O produto final é embalado e etiquetado para o mercado.", cur: "Cada chapa possui rastreabilidade total, do viveiro ao cliente." }
+        ];
 
-        window.onload = () => {
-            const saved = localStorage.getItem('duratex_final_v2');
-            if(saved) siteData = JSON.parse(saved);
-            updateUI();
-        };
+        let siteData = { turma: "Pedro Vicente", agenda: "08:00 | Café | Equipe", vis: [true,true,true,true,true], showQuiz: true, showDownload: true, link: "#", mainPhoto: "" };
 
         function showSection(id, btn) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            btn.classList.add('active');
-            window.scrollTo(0,0);
+            if(btn) btn.classList.add('active');
         }
+
+        const lista = document.getElementById('lista-etapas');
+        ETAPAS.forEach((e, i) => {
+            lista.innerHTML += `<div class="etapa-item" onclick="openModal(${i})"><div class="etapa-number">${e.n}</div><div class="etapa-label">${e.t}</div><span class="material-symbols-outlined">chevron_right</span></div>`;
+        });
+
+        function openModal(i) {
+            const d = ETAPAS[i];
+            document.getElementById('modal-body').innerHTML = `<h3 style="color:var(--primary-blue)">${d.n}. ${d.t}</h3><img src="${d.n}.png" class="modal-img" onerror="this.src='https://via.placeholder.com/500x300?text=Etapa+${d.n}'"><p><b>Processo:</b> ${d.oq}</p><p><b>💡 Curiosidade:</b> ${d.cur}</p>`;
+            document.getElementById('modal-etapa').style.display = 'flex';
+        }
+
+        const QUIZ = [{ q: "Qual o calçado obrigatório?", o: ["Chinelo", "Calçado Fechado"], c: 1 }];
+        let qIdx = 0, score = 0;
+        function startQuiz() { qIdx = 0; score = 0; showSection('quiz'); loadQ(); }
+        function loadQ() {
+            const q = QUIZ[qIdx]; document.getElementById('quiz-question').innerText = q.q;
+            const opt = document.getElementById('quiz-options'); opt.innerHTML = "";
+            q.o.forEach((o, i) => {
+                const b = document.createElement('button'); b.className = 'quiz-option'; b.innerText = o;
+                b.onclick = () => { if(i === q.c) score++; qIdx++; if(qIdx < QUIZ.length) loadQ(); else showR(); };
+                opt.appendChild(b);
+            });
+        }
+        function showR() { document.getElementById('quiz-screen').style.display='none'; document.getElementById('quiz-result').style.display='block'; document.getElementById('quiz-score-text').innerText = `Acertos: ${score}/${QUIZ.length}`; }
 
         function checkAdmin() {
             if(document.getElementById('admin-pass').value === "1234") {
-                document.getElementById('admin-login').style.display = 'none';
-                document.getElementById('admin-panel').style.display = 'block';
-                
+                document.getElementById('admin-login').style.display='none';
+                document.getElementById('admin-panel').style.display='block';
                 document.getElementById('edit-turma').value = siteData.turma;
                 document.getElementById('edit-agenda').value = siteData.agenda;
-                document.getElementById('edit-link-down').value = siteData.linkDownload;
-                document.getElementById('edit-cor').value = siteData.corBotao;
-                document.getElementById('check-show-download').checked = siteData.showDownload;
-
-                const container = document.getElementById('admin-insta-toggles');
-                container.innerHTML = "";
-                FACILITADORES.forEach((f, index) => {
-                    container.innerHTML += `
-                        <div class="toggle-row" onclick="document.getElementById('check-f-${index}').click()">
-                            <input type="checkbox" class="checkbox-custom" id="check-f-${index}" ${siteData.visibilidade[index] ? 'checked' : ''} onclick="event.stopPropagation()">
-                            <span>${f.nome}</span>
-                        </div>
-                    `;
-                });
-            } else { alert("Senha incorreta!"); }
+                document.getElementById('edit-link').value = siteData.link;
+                document.getElementById('check-quiz').checked = siteData.showQuiz;
+                document.getElementById('check-down').checked = siteData.showDownload;
+                const t = document.getElementById('admin-insta-toggles'); t.innerHTML = "";
+                FACILITADORES.forEach((f, i) => { t.innerHTML += `<div class="toggle-row" onclick="document.getElementById('c-${i}').click()"><input type="checkbox" id="c-${i}" ${siteData.vis[i]?'checked':''} onclick="event.stopPropagation()"> ${f.nome}</div>`; });
+            }
         }
 
         function saveAdmin() {
+            const file = document.getElementById('admin-photo-input').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    siteData.mainPhoto = e.target.result;
+                    finalizeSave();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                finalizeSave();
+            }
+        }
+
+        function finalizeSave() {
             siteData.turma = document.getElementById('edit-turma').value;
             siteData.agenda = document.getElementById('edit-agenda').value;
-            siteData.linkDownload = document.getElementById('edit-link-down').value;
-            siteData.corBotao = document.getElementById('edit-cor').value;
-            siteData.showDownload = document.getElementById('check-show-download').checked;
-
-            siteData.visibilidade = FACILITADORES.map((_, index) => {
-                return document.getElementById(`check-f-${index}`).checked;
-            });
-
-            localStorage.setItem('duratex_final_v2', JSON.stringify(siteData));
-            updateUI();
-            alert("Alterações salvas!");
+            siteData.link = document.getElementById('edit-link').value;
+            siteData.showQuiz = document.getElementById('check-quiz').checked;
+            siteData.showDownload = document.getElementById('check-down').checked;
+            siteData.vis = FACILITADORES.map((_, i) => document.getElementById(`c-${i}`).checked);
+            localStorage.setItem('duratex_final_v8', JSON.stringify(siteData));
+            updateUI(); alert("Salvo!");
         }
 
         function updateUI() {
             document.getElementById('display-turma-nome').innerText = siteData.turma;
+            document.getElementById('quiz-entry-point').style.display = siteData.showQuiz ? 'block' : 'none';
+            document.getElementById('btn-download-extra').style.display = siteData.showDownload ? 'flex' : 'none';
+            document.getElementById('btn-download-extra').href = siteData.link;
             
-            const tbody = document.getElementById('agenda-body');
-            tbody.innerHTML = "";
-            siteData.agenda.split('\n').forEach(linha => {
-                const p = linha.split('|');
-                if(p.length === 3) tbody.innerHTML += `<tr><td><b>${p[0].trim()}</b></td><td>${p[1].trim()}</td><td><i>${p[2].trim()}</i></td></tr>`;
-            });
-
-            const container = document.getElementById('container-instas');
-            container.innerHTML = "";
-            FACILITADORES.forEach((f, index) => {
-                if(siteData.visibilidade[index]) {
-                    container.innerHTML += `
-                        <a href="${f.link}" target="_blank" class="btn-link">
-                            <span class="material-symbols-outlined" style="color: #E1306C;">person_add</span>
-                            <span>Instagram do ${f.nome}</span>
-                        </a>`;
-                }
-            });
-
-            // Controle do Botão de Download
-            const btnDown = document.getElementById('btn-download-extra');
-            if(siteData.showDownload) {
-                btnDown.style.display = "flex";
-                btnDown.href = siteData.linkDownload;
-                btnDown.style.backgroundColor = siteData.corBotao;
-            } else {
-                btnDown.style.display = "none";
+            const img = document.getElementById('main-photo');
+            const placeholder = document.getElementById('hero-placeholder');
+            if(siteData.mainPhoto) {
+                img.src = siteData.mainPhoto;
+                img.classList.add('active');
+                placeholder.style.display = 'none';
             }
+
+            const body = document.getElementById('agenda-body'); body.innerHTML = "";
+            siteData.agenda.split('\n').forEach(l => { const p = l.split('|'); if(p.length === 3) body.innerHTML += `<tr><td><b>${p[0].trim()}</b></td><td>${p[1].trim()}</td><td>${p[2].trim()}</td></tr>`; });
+            const instas = document.getElementById('container-instas'); instas.innerHTML = "";
+            FACILITADORES.forEach((f, i) => { if(siteData.vis[i]) instas.innerHTML += `<a href="${f.link}" target="_blank" class="btn-link">Instagram do ${f.nome}</a>`; });
         }
+
+        window.onload = () => {
+            const s = localStorage.getItem('duratex_final_v8');
+            if(s) siteData = JSON.parse(s);
+            updateUI();
+        };
     </script>
 </body>
 </html>
