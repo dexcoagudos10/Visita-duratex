@@ -1,309 +1,272 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duratex - Visita Agudos</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Duratex REHAU Visit - 07 de Maio de 2026</title>
     <style>
-        :root {
-            --primary-blue: #0033ab;
-            --light-blue: #eef2ff;
-            --accent-blue: #0046ff;
-            --bg-color: #f4f7ff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); margin: 0; padding-bottom: 100px; color: #333; }
-        header { text-align: center; padding: 15px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo img { height: 35px; width: auto; }
-        
-        main { padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .content-section { width: 100%; display: none; flex-direction: column; align-items: center; max-width: 600px; animation: fadeIn 0.3s; }
-        .content-section.active { display: flex; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .mobile-container {
+            width: 100vw;
+            height: 100dvh;
+            position: relative;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            animation: fadeIn 0.3s ease-in;
+            padding-bottom: 110px;
+        }
+
+        .screen.active { display: flex; position: relative; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .card { background: white; border-radius: 20px; padding: 25px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); box-sizing: border-box; margin-bottom: 20px; }
-        h2 { color: var(--primary-blue); text-align: center; margin-top: 0; margin-bottom: 10px; }
-        
-        /* IMAGEM PRINCIPAL SALVÁVEL */
-        .hero-img-container { width: 100%; height: 250px; border-radius: 15px; margin-bottom: 20px; overflow: hidden; background: #ddd; display: flex; align-items: center; justify-content: center; }
-        .hero-img-container img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .hero-img-container img.active { display: block; }
-        .placeholder-text { color: #999; font-size: 14px; }
+        /* HEADER PADRÃO */
+        .app-header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* JORNADA */
-        .etapa-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: white; padding: 12px; border-radius: 12px; border: 1px solid #eee; cursor: pointer; }
-        .etapa-number { background: var(--primary-blue); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
-        .etapa-label { flex-grow: 1; font-weight: 600; font-size: 14px; color: var(--primary-blue); }
+        /* TELA 1: BOAS-VINDAS */
+        .screen-welcome {
+            background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+            color: white;
+            justify-content: space-between;
+            padding: 4rem 2rem 6rem 2rem;
+            text-align: center;
+        }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: flex-end; justify-content: center; }
-        .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 30px 30px 0 0; padding: 30px 20px; position: relative; max-height: 90vh; overflow-y: auto; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .modal-img { width: 100%; border-radius: 20px; margin-bottom: 20px; background: #eee; }
+        .logo-container { display: flex; justify-content: center; align-items: center; gap: 1.5rem; }
+        .logo-duratex { font-size: 1.8rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; }
+        .logo-rehau { font-size: 1.6rem; font-weight: 900; letter-spacing: 1px; }
+        .divider { width: 1px; height: 30px; background: rgba(255,255,255,0.3); }
 
-        .quiz-option { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #eee; border-radius: 10px; background: white; cursor: pointer; text-align: left; }
-        .quiz-option.correct { background: #dcfce7; border-color: #22c55e; }
-        .quiz-option.wrong { background: #fee2e2; border-color: #ef4444; }
+        .welcome-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 16px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
 
-        .table-wrapper { overflow-x: auto; width: 100%; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th { background: var(--primary-blue); color: white; padding: 10px; text-align: left; }
-        td { padding: 10px; border-bottom: 1px solid #eee; }
+        /* TELA 2: CRONOGRAMA */
+        .timeline { padding: 2rem 1rem; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 4.8rem; top: 0; bottom: 0; width: 2px; background: #eee; }
+        .timeline-item { display: flex; margin-bottom: 1.5rem; position: relative; align-items: flex-start; }
+        .timeline-time { width: 4.2rem; font-size: 0.9rem; font-weight: 700; color: #2c3e50; text-align: right; padding-top: 4px; flex-shrink: 0; }
+        .timeline-dot { width: 14px; height: 14px; background: #2c3e50; border: 3px solid white; border-radius: 50%; margin: 6px 15px 0 10px; z-index: 2; box-shadow: 0 0 0 1px #2c3e50; flex-shrink: 0; }
+        .timeline-content { flex: 1; background: white; padding: 1.2rem; border-radius: 12px; border: 1px solid #f0f0f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        .btn-link { display: flex; align-items: center; gap: 12px; background: #fff; padding: 12px; border-radius: 12px; text-decoration: none; color: #333; margin-bottom: 10px; border: 1px solid #eee; font-weight: 600; }
-        .btn-action { background: var(--accent-blue); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
-        .admin-input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
-        .toggle-row { display: flex; align-items: center; gap: 12px; background: #f9f9f9; padding: 12px; border-radius: 10px; margin-bottom: 8px; cursor: pointer; border: 1px solid #eee; }
-        .checkbox-custom { width: 20px; height: 20px; accent-color: var(--primary-blue); }
+        /* TELA 3: SEGURANÇA */
+        .safety-hero { background: #333; color: white; padding: 2rem; text-align: center; }
+        .safety-hero-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+        .safety-highlight { color: #f1c40f; }
+        .safety-list { padding: 1.5rem; }
+        .safety-item { background: white; padding: 1rem; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; border-left: 5px solid #1b7a3a; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .safety-circle { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #1b7a3a; display: flex; justify-content: center; align-items: center; color: #1b7a3a; font-weight: 700; flex-shrink: 0; }
+        .safety-item-5 { border-left-color: #f39c12; }
+        .safety-item-5 .safety-circle { border-color: #f39c12; color: #f39c12; }
 
-        nav { background: white; display: flex; justify-content: space-around; border-top: 1px solid #eee; position: fixed; bottom: 0; width: 100%; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; padding: 10px 0; flex: 1; font-size: 9px; color: #666; cursor: pointer; }
-        .nav-item.active { color: var(--primary-blue); background: var(--light-blue); border-top: 3px solid var(--primary-blue); }
+        /* TELA 4: LINKS E DOWNLOADS */
+        .links-container { padding: 2.5rem 1.5rem; }
+        .links-number { color: #3498db; font-weight: 800; letter-spacing: 2px; font-size: 1rem; margin-bottom: 0.5rem; }
+        .links-title { font-size: 2.2rem; font-weight: 700; color: #2c3e50; margin-bottom: 2rem; line-height: 1.1; }
+        .link-row { 
+            background: white; 
+            padding: 1.3rem; 
+            border-radius: 12px; 
+            margin-bottom: 1rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            text-decoration: none; 
+            color: #2c3e50; 
+            font-weight: 600; 
+            border: 2px solid #2c3e50; 
+        }
+        .download-btn-dark {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 1.3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* NAVEGAÇÃO */
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; transition: 0.3s; }
+        .nav-dot.active { background: #3498db; width: 30px; }
     </style>
 </head>
 <body>
 
-    <header><div class="logo"><img src="logo.png" alt="Duratex"></div></header>
+<div class="mobile-container">
+    <div class="screen screen-welcome active" id="screen1">
+        <div class="logo-container">
+            <div class="logo-duratex">duratex</div>
+            <div class="divider"></div>
+            <div class="logo-rehau">REHAU</div>
+        </div>
+        <div>
+            <h1 style="font-size: 2.8rem; font-weight: 700;">Bem-vindos à<br>Agudos</h1>
+            <div style="width: 50px; height: 4px; background: #3498db; margin: 1.5rem auto;"></div>
+            <p style="opacity: 0.7; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase;">07 de Maio de 2026</p>
+        </div>
+        <button class="welcome-button" onclick="goToScreen(2)">Ver Agenda</button>
+    </div>
 
-    <main>
-        <section id="home" class="content-section active">
-            <div class="hero-img-container" id="hero-container">
-                <span class="placeholder-text" id="hero-placeholder">Nenhuma foto carregada</span>
-                <img id="main-photo" src="" alt="Destaque">
-            </div>
-            <div class="card" style="text-align: center;">
-                <h1 id="display-welcome-title">Bem-Vindos!</h1>
-                <p><strong id="display-turma-nome">Pedro Vicente</strong></p>
-                <p style="font-size: 14px; color: #666;">Explore a unidade através do menu abaixo.</p>
-            </div>
-        </section>
-
-        <section id="jornada" class="content-section">
-            <div class="card">
-                <h2>Jornada do MDF</h2>
-                <div id="lista-etapas"></div>
-            </div>
-        </section>
-
-        <section id="seguranca" class="content-section">
-            <div class="card">
-                <h2>Segurança</h2>
-                <img src="img1.jpg" style="width:100%; border-radius:10px;" onerror="this.src='https://via.placeholder.com/500x300?text=img1.jpg+Nao+Encontrada'">
-                <div id="quiz-entry-point" style="margin-top:20px;">
-                    <button class="btn-action" onclick="startQuiz()">Iniciar Quiz de Segurança</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="quiz" class="content-section">
-            <div class="card">
-                <div id="quiz-screen">
-                    <h3 id="quiz-question"></h3>
-                    <div id="quiz-options"></div>
-                </div>
-                <div id="quiz-result" style="display:none; text-align:center;">
-                    <h2 id="quiz-score-text"></h2>
-                    <button class="btn-action" onclick="showSection('seguranca', document.getElementById('nav-seg'))">Voltar</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="cronograma" class="content-section">
-            <div class="card">
-                <h2>Programação</h2>
-                <div class="table-wrapper">
-                    <table><thead><tr><th>Horário</th><th>Atividade</th><th>Resp.</th></tr></thead><tbody id="agenda-body"></tbody></table>
-                </div>
-            </div>
-        </section>
-
-        <section id="extra" class="content-section">
-            <div class="card">
-                <h2>Conteúdo Extra</h2>
-                <div id="container-instas"></div>
-                <a id="btn-download-extra" class="btn-action" style="margin-top:15px;"><span class="material-symbols-outlined">download</span> Download Fotos</a>
-            </div>
-        </section>
-
-        <section id="admin" class="content-section">
-            <div id="admin-login" class="card">
-                <h2>Acesso Admin</h2>
-                <input type="password" id="admin-pass" class="admin-input" placeholder="Senha">
-                <button class="btn-action" onclick="checkAdmin()">Entrar</button>
-            </div>
-            <div id="admin-panel" class="card" style="display:none;">
-                <h2>Configurações</h2>
-                
-                <label style="font-size:11px; font-weight:bold;">FOTO PRINCIPAL (INÍCIO)</label>
-                <input type="file" id="admin-photo-input" class="admin-input" accept="image/*">
-
-                <label style="font-size:11px; font-weight:bold;">NOME DA TURMA</label>
-                <input type="text" id="edit-turma" class="admin-input">
-                
-                <label style="font-size:11px; font-weight:bold;">AGENDA</label>
-                <textarea id="edit-agenda" class="admin-input" rows="3"></textarea>
-
-                <div class="toggle-row" onclick="document.getElementById('check-quiz').click()">
-                    <input type="checkbox" id="check-quiz" class="checkbox-custom" onclick="event.stopPropagation()"> 
-                    <span>Exibir Quiz</span>
-                </div>
-
-                <div class="toggle-row" onclick="document.getElementById('check-down').click()">
-                    <input type="checkbox" id="check-down" class="checkbox-custom" onclick="event.stopPropagation()"> 
-                    <span>Exibir Download</span>
-                </div>
-
-                <label style="font-size:11px; font-weight:bold;">LINK DOWNLOAD</label>
-                <input type="text" id="edit-link" class="admin-input">
-                
-                <p style="font-weight:bold;">FACILITADORES:</p>
-                <div id="admin-insta-toggles"></div>
-                
-                <button class="btn-action" style="background:#222; margin-top:20px;" onclick="saveAdmin()">Salvar Tudo</button>
-            </div>
-        </section>
-    </main>
-
-    <div id="modal-etapa" class="modal" onclick="this.style.display='none'">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="modal-body"></div>
+    <div class="screen" id="screen2">
+        <div class="app-header">
+            <div class="logo-duratex" style="font-size: 1.2rem;">duratex</div>
+            <div style="font-size: 1.2rem;">☰</div>
+        </div>
+        <div style="padding: 1.5rem; text-align: center;">
+            <span style="font-size: 2rem;">📅</span>
+            <h2 style="font-size: 1.5rem; color: #2c3e50;">Cronograma</h2>
+            <p style="color: #7f8c8d; font-size: 0.9rem;">Confira a programação do dia.</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item"><div class="timeline-time">9h50</div><div class="timeline-dot"></div><div class="timeline-content">🚗 <b>Chegada das 07 pessoas</b></div></div>
+            <div class="timeline-item"><div class="timeline-time">10h00</div><div class="timeline-dot"></div><div class="timeline-content">👥 <b>Recepção e Vídeo</b><br><small>Padial/Pedro</small></div></div>
+            <div class="timeline-item"><div class="timeline-time">10h10</div><div class="timeline-dot"></div><div class="timeline-content">☕ <b>Welcome Coffee</b><br><small>Simone Berto</small></div></div>
+            <div class="timeline-item"><div class="timeline-time">10h25</div><div class="timeline-dot"></div><div class="timeline-content">📊 <b>Apresentação da Unidade</b><br><small>Padial/Pedro</small></div></div>
+            <div class="timeline-item"><div class="timeline-time">11h25</div><div class="timeline-dot"></div><div class="timeline-content">📸 <b>Foto Panorâmica</b></div></div>
+            <div class="timeline-item"><div class="timeline-time">11h35</div><div class="timeline-dot"></div><div class="timeline-content">🍽️ <b>Almoço</b></div></div>
+            <div class="timeline-item"><div class="timeline-time">12h35</div><div class="timeline-dot"></div><div class="timeline-content">🏭 <b>Visita Produção MDF 2/BP</b><br><small>⚠️ MDF 1 em Manutenção</small></div></div>
+            <div class="timeline-item"><div class="timeline-time">14h35</div><div class="timeline-dot"></div><div class="timeline-content">🧪 <b>Laboratório</b><br><small>Laurene Cassio</small></div></div>
+            <div class="timeline-item"><div class="timeline-time">15h10</div><div class="timeline-dot"></div><div class="timeline-content">🚻 <b>Banheiro/Intervalo</b></div></div>
+            <div class="timeline-item"><div class="timeline-time">15h20</div><div class="timeline-dot"></div><div class="timeline-content">🚩 <b>Considerações Finais</b></div></div>
         </div>
     </div>
 
-    <nav>
-        <div class="nav-item active" onclick="showSection('home', this)"><span class="material-symbols-outlined">home</span>Início</div>
-        <div class="nav-item" onclick="showSection('jornada', this)"><span class="material-symbols-outlined">account_tree</span>Jornada</div>
-        <div id="nav-seg" class="nav-item" onclick="showSection('seguranca', this)"><span class="material-symbols-outlined">shield</span>Segurança</div>
-        <div class="nav-item" onclick="showSection('cronograma', this)"><span class="material-symbols-outlined">schedule</span>Agenda</div>
-        <div class="nav-item" onclick="showSection('extra', this)"><span class="material-symbols-outlined">more_horiz</span>Extra</div>
-        <div class="nav-item" onclick="showSection('admin', this)"><span class="material-symbols-outlined">settings</span>Admin</div>
-    </nav>
+    <div class="screen" id="screen3">
+        <div class="app-header">
+            <div class="logo-duratex" style="font-size: 1.2rem;">duratex</div>
+            <div style="font-size: 1.2rem;">☰</div>
+        </div>
+        <div class="safety-hero">
+            <div class="safety-hero-icon">🛡️</div>
+            <h2 class="safety-hero-title">Normas de <span class="safety-highlight">Segurança</span></h2>
+        </div>
+        <div class="safety-list">
+            <div class="safety-item"><div class="safety-circle">1</div><div><b>👕 Vestimenta</b><br><small>Calçado fechado, calça e blusa com manga.</small></div></div>
+            <div class="safety-item"><div class="safety-circle">2</div><div><b>👤 Conduta</b><br><small>Cabelo preso, sem jóias e proibido fotos.</small></div></div>
+            <div class="safety-item"><div class="safety-circle">3</div><div><b>📱 Celular</b><br><small>Utilizar somente parado e em local seguro.</small></div></div>
+            <div class="safety-item"><div class="safety-circle">4</div><div><b>🚶‍♂️ Faixas</b><br><small>Mantenha-se na faixa de segurança.</small></div></div>
+            <div class="safety-item safety-item-5"><div class="safety-circle">5</div><div><b>⚠️ Atenção Redobrada</b><br><small>Risco com equipamentos em movimento.</small></div></div>
+        </div>
+    </div>
 
-    <script>
-        const FACILITADORES = [
-            { nome: "Luciano Lima", link: "https://www.instagram.com/lucianolima.dexco" },
-            { nome: "Pedro Vicente", link: "https://www.instagram.com/pedro.dexco" },
-            { nome: "Indiara Peres", link: "https://www.instagram.com/indiara.dexco" },
-            { nome: "Gabriel Carvalho", link: "https://www.instagram.com/gabriel.dexco" },
-            { nome: "Everton Padial", link: "https://www.instagram.com/everton.padial" }
-        ];
-
-        const ETAPAS = [
-            { n: 1, t: "Florestas Plantadas", oq: "Tudo começa com o cultivo sustentável de eucalipto e pinus.", cur: "A Duratex possui uma das maiores áreas de reflorestamento do Brasil." },
-            { n: 2, t: "Toras", oq: "A madeira é cortada em toras padronizadas para o processamento.", cur: "As toras são selecionadas rigorosamente para garantir a fibra ideal." },
-            { n: 3, t: "Descascador", oq: "As toras passam por grandes tambores que removem a casca por atrito.", cur: "A casca removida é utilizada como biomassa para gerar energia limpa." },
-            { n: 4, t: "Produção de Cavacos", oq: "A madeira é picada em pequenos pedaços chamados cavacos.", cur: "O tamanho uniforme do cavaco garante um cozimento eficiente da fibra." },
-            { n: 5, t: "Classificação e Lavagem", oq: "Os cavacos são lavados e peneirados para eliminar impurezas.", cur: "Esse processo protege as máquinas e aumenta a durabilidade do painel." },
-            { n: 6, t: "Desfibrador", oq: "Sob alta pressão e calor, o cavaco vira uma fibra macia de madeira.", cur: "Nesta fase, a madeira adquire a textura de algodão." },
-            { n: 7, t: "Formação do Painel", oq: "As fibras recebem resina e são espalhadas em um colchão contínuo.", cur: "A distribuição uniforme evita falhas no interior da chapa." },
-            { n: 8, t: "Pré-Prensagem", oq: "O colchão de fibras é compactado para retirar o ar excessivo.", cur: "É aqui que o painel começa a ganhar sua espessura definida." },
-            { n: 9, t: "Prensagem Contínua", oq: "Calor e pressão extrema fundem as fibras e a resina permanentemente.", cur: "A prensa funciona sem parar, criando um tapete infinito de MDF." },
-            { n: 10, t: "Corte Chapa Máster", oq: "Serras precisas cortam o tapete infinito em grandes painéis máster.", cur: "O corte é feito de forma automatizada para manter o ritmo da linha." },
-            { n: 11, t: "Resfriamento", oq: "As chapas quentes descansam em estrelas rotativas para esfriar.", cur: "O resfriamento controlado evita que a madeira empenue ou rache." },
-            { n: 12, t: "Lixadeira", oq: "As chapas são lixadas para atingir a espessura final e superfície lisa.", cur: "O pó de lixa é coletado e também usado como combustível renovável." },
-            { n: 13, t: "Corte Final", oq: "Os painéis máster são divididos nos formatos comerciais finais.", cur: "A precisão milimétrica garante o esquadro perfeito para móveis." },
-            { n: 14, t: "Painel de MDF", oq: "O produto final é embalado e etiquetado para o mercado.", cur: "Cada chapa possui rastreabilidade total, do viveiro ao cliente." }
-        ];
-
-        let siteData = { turma: "Pedro Vicente", agenda: "08:00 | Café | Equipe", vis: [true,true,true,true,true], showQuiz: true, showDownload: true, link: "#", mainPhoto: "" };
-
-        function showSection(id, btn) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(btn) btn.classList.add('active');
-        }
-
-        const lista = document.getElementById('lista-etapas');
-        ETAPAS.forEach((e, i) => {
-            lista.innerHTML += `<div class="etapa-item" onclick="openModal(${i})"><div class="etapa-number">${e.n}</div><div class="etapa-label">${e.t}</div><span class="material-symbols-outlined">chevron_right</span></div>`;
-        });
-
-        function openModal(i) {
-            const d = ETAPAS[i];
-            document.getElementById('modal-body').innerHTML = `<h3 style="color:var(--primary-blue)">${d.n}. ${d.t}</h3><img src="${d.n}.png" class="modal-img" onerror="this.src='https://via.placeholder.com/500x300?text=Etapa+${d.n}'"><p><b>Processo:</b> ${d.oq}</p><p><b>💡 Curiosidade:</b> ${d.cur}</p>`;
-            document.getElementById('modal-etapa').style.display = 'flex';
-        }
-
-        const QUIZ = [{ q: "Qual o calçado obrigatório?", o: ["Chinelo", "Calçado Fechado"], c: 1 }];
-        let qIdx = 0, score = 0;
-        function startQuiz() { qIdx = 0; score = 0; showSection('quiz'); loadQ(); }
-        function loadQ() {
-            const q = QUIZ[qIdx]; document.getElementById('quiz-question').innerText = q.q;
-            const opt = document.getElementById('quiz-options'); opt.innerHTML = "";
-            q.o.forEach((o, i) => {
-                const b = document.createElement('button'); b.className = 'quiz-option'; b.innerText = o;
-                b.onclick = () => { if(i === q.c) score++; qIdx++; if(qIdx < QUIZ.length) loadQ(); else showR(); };
-                opt.appendChild(b);
-            });
-        }
-        function showR() { document.getElementById('quiz-screen').style.display='none'; document.getElementById('quiz-result').style.display='block'; document.getElementById('quiz-score-text').innerText = `Acertos: ${score}/${QUIZ.length}`; }
-
-        function checkAdmin() {
-            if(document.getElementById('admin-pass').value === "1234") {
-                document.getElementById('admin-login').style.display='none';
-                document.getElementById('admin-panel').style.display='block';
-                document.getElementById('edit-turma').value = siteData.turma;
-                document.getElementById('edit-agenda').value = siteData.agenda;
-                document.getElementById('edit-link').value = siteData.link;
-                document.getElementById('check-quiz').checked = siteData.showQuiz;
-                document.getElementById('check-down').checked = siteData.showDownload;
-                const t = document.getElementById('admin-insta-toggles'); t.innerHTML = "";
-                FACILITADORES.forEach((f, i) => { t.innerHTML += `<div class="toggle-row" onclick="document.getElementById('c-${i}').click()"><input type="checkbox" id="c-${i}" ${siteData.vis[i]?'checked':''} onclick="event.stopPropagation()"> ${f.nome}</div>`; });
-            }
-        }
-
-        function saveAdmin() {
-            const file = document.getElementById('admin-photo-input').files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    siteData.mainPhoto = e.target.result;
-                    finalizeSave();
-                };
-                reader.readAsDataURL(file);
-            } else {
-                finalizeSave();
-            }
-        }
-
-        function finalizeSave() {
-            siteData.turma = document.getElementById('edit-turma').value;
-            siteData.agenda = document.getElementById('edit-agenda').value;
-            siteData.link = document.getElementById('edit-link').value;
-            siteData.showQuiz = document.getElementById('check-quiz').checked;
-            siteData.showDownload = document.getElementById('check-down').checked;
-            siteData.vis = FACILITADORES.map((_, i) => document.getElementById(`c-${i}`).checked);
-            localStorage.setItem('duratex_final_v8', JSON.stringify(siteData));
-            updateUI(); alert("Salvo!");
-        }
-
-        function updateUI() {
-            document.getElementById('display-turma-nome').innerText = siteData.turma;
-            document.getElementById('quiz-entry-point').style.display = siteData.showQuiz ? 'block' : 'none';
-            document.getElementById('btn-download-extra').style.display = siteData.showDownload ? 'flex' : 'none';
-            document.getElementById('btn-download-extra').href = siteData.link;
+    <div class="screen" id="screen4">
+        <div class="app-header">
+            <div class="logo-duratex" style="font-size: 1.2rem;">duratex</div>
+            <div style="font-size: 1.2rem;">☰</div>
+        </div>
+        <div class="links-container">
+            <p class="links-number">04</p>
+            <h2 class="links-title">Links e<br>Downloads</h2>
             
-            const img = document.getElementById('main-photo');
-            const placeholder = document.getElementById('hero-placeholder');
-            if(siteData.mainPhoto) {
-                img.src = siteData.mainPhoto;
-                img.classList.add('active');
-                placeholder.style.display = 'none';
-            }
+            <a href="https://www.instagram.com/clubeduratex?igsh=MWE2ajJqZG93cGNqdQ==" target="_blank" class="link-row">
+                <span>📷 Siga a Duratex</span><span>›</span>
+            </a>
+            <a href="https://www.instagram.com/pedro.dexco?igsh=ZjQxem8ycjl1djdx" target="_blank" class="link-row">
+                <span>📷 Pedro Vicente</span><span>›</span>
+            </a>
+            
+            <button class="download-btn-dark" onclick="alert('Download em breve...')">
+                <span>☁️</span> Download Fotos da Visita
+            </button>
+        </div>
+    </div>
 
-            const body = document.getElementById('agenda-body'); body.innerHTML = "";
-            siteData.agenda.split('\n').forEach(l => { const p = l.split('|'); if(p.length === 3) body.innerHTML += `<tr><td><b>${p[0].trim()}</b></td><td>${p[1].trim()}</td><td>${p[2].trim()}</td></tr>`; });
-            const instas = document.getElementById('container-instas'); instas.innerHTML = "";
-            FACILITADORES.forEach((f, i) => { if(siteData.vis[i]) instas.innerHTML += `<a href="${f.link}" target="_blank" class="btn-link">Instagram do ${f.nome}</a>`; });
+    <div class="navigation">
+        <div class="nav-dot active" onclick="goToScreen(1)"></div>
+        <div class="nav-dot" onclick="goToScreen(2)"></div>
+        <div class="nav-dot" onclick="goToScreen(3)"></div>
+        <div class="nav-dot" onclick="goToScreen(4)"></div>
+    </div>
+</div>
+
+<script>
+    let currentScreen = 1;
+    const totalScreens = 4;
+
+    function goToScreen(n) {
+        if (n < 1 || n > totalScreens) return;
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen' + n).classList.add('active');
+        document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i+1 === n));
+        document.getElementById('screen' + n).scrollTop = 0;
+        currentScreen = n;
+    }
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+    document.addEventListener('touchend', e => {
+        let diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 60) {
+            if (diff > 0) goToScreen(currentScreen + 1);
+            else goToScreen(currentScreen - 1);
         }
-
-        window.onload = () => {
-            const s = localStorage.getItem('duratex_final_v8');
-            if(s) siteData = JSON.parse(s);
-            updateUI();
-        };
-    </script>
+    }, {passive: true});
+</script>
 </body>
 </html>
